@@ -20,8 +20,11 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("SKI LCA Swagger")
-                .description("Lca 서비스 API 목록")
+                .description("SKI Lca Service API 목록")
                 .version("1.0.0")
+                .license("Apache License Version 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .termsOfServiceUrl("http://example.com/terms/")
                 .build();
     }
 

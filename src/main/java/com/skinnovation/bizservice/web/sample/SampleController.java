@@ -19,10 +19,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
 @Slf4j
 @Tag(name = "sample", description = "샘플 API")
 @RequestMapping(value = "/v1/sample")
+@RestController
 public class SampleController {
     private static final Logger logger = LogManager.getLogger(SampleController.class);
 
