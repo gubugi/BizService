@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.skinnovation.bizservice.service.sample.SampleMapper">
+    <select id="findUser"
+            parameterType="com.skinnovation.bizservice.service.sample.vo.SampleSearchReqVo"
+            resultType="com.skinnovation.bizservice.service.sample.vo.SampleRespVo">
+        SELECT
+            user_no
+             , user_id
+             , user_pw
+             , user_nm
+             , user_email
+             , user_corp_cd
+             , CONVERT(CHAR(19), create_at, 20) as create_at
+             , CONVERT(CHAR(19), update_at, 20) as update_at
+        FROM tbl_mst_user2
+        WHERE
+            user_id = #{userId}
+    </select>
+
+    <insert id="insertUser" parameterType="com.skinnovation.bizservice.service.sample.vo.SampleAddVo">
+        INSERT INTO tbl_mst_user2 (
+                              user_id
+                            , user_pw
+                            , user_nm
+                            , user_email
+                            , user_corp_cd
+                            , user_role
+                            , create_at
+                            , update_at
+        ) VALUES (
+                   #{userId}
+                 , #{userPw}
+                 , #{userNm}
+                 , #{userEmail}
+                 , #{userCorpCd}
+                 , #{userRole}
+                 , SYSDATETIME()
+                 , SYSDATETIME()
+                 )
+    </insert>
+</mapper>

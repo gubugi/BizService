@@ -1,0 +1,44 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: biz-service
+  profiles:
+    active: local
+  output:
+    ansi:
+      enabled: always
+#  datasource:
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://10.90.2.203:1433;DatabaseName=SKI_LCA_WEB
+#    username: lca_web_service
+#    password: lcasvr!203PW@
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/tt_ski?characterEncoding=UTF-8&serverTimezone=UTC
+#    username: root
+#    password: 741218g!$
+
+mybatis:
+  mapper-locations: mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    sql: debug
+    web: debug
+#    com.skinnovation.bizservice.service: debug
+#    com.skinnovation.bizservice.web: debug
+  file:
+    path: /logs
+
+log:
+  config:
+    path: file:D:/workspace/skinnovation/BizService/log
+
+jasypt:
+  encryptor:
+    bean: jasyptEncryptor
+    password: skilcalife
