@@ -1,21 +1,19 @@
-package com.skinnovation.bizservice.service.sample.vo;
+package com.skinnovation.bizservice.service.common.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
-
 @Getter
 @Setter
 @Schema(description = "사용자 정보")
-public class SampleRespVo {
-    @Schema(description = "사용자번호", defaultValue = "0")
-    private Long userNo;
+public class UserReqVo {
     @Schema(description = "사용자아이디")
     private String userId;
-    @Schema(description = "사용자암호", accessMode = READ_ONLY)
+    @Schema(description = "사용자암호")
     private String userPw;
+    @Schema(description = "사용자암호", accessMode = Schema.AccessMode.READ_ONLY)
+    private String userCryptoPw;
     @Schema(description = "사용자이름")
     private String userNm;
     @Schema(description = "사용자이메일")
@@ -24,8 +22,4 @@ public class SampleRespVo {
     private String userCorpCd;
     @Schema(description = "사용자권한")
     private String userRole;
-    @Schema(description = "등록일자")
-    private String createAt;
-    @Schema(description = "최종수정일자")
-    private String updateAt;
 }
