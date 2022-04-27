@@ -21,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    private String PASSWORD;
     private String secretKey = "ski-lca-life";
 
     // 토큰 유효시간 30분
@@ -29,7 +28,7 @@ public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
 
-    // 객체 초기화, secretKey를 Base64로 인코딩한다.
+    // 객체 초기화, secret Key를 Base64로 인코딩한다.
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
