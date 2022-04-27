@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://10.90.2.203:1433;DatabaseName=SKI_LCA_WEB
+    username: ENC(02TJayD6q3sklfgIob+ws+rPyNlQTlrZ)
+    password: ENC(mw4qTfR1fmLUq6AId+r8qXWIiVh+JkVD)

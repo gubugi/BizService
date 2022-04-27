@@ -5,11 +5,12 @@ import com.skinnovation.bizservice.service.sample.vo.SampleAddVo;
 import com.skinnovation.bizservice.service.sample.vo.SampleReqVo;
 import com.skinnovation.bizservice.service.sample.vo.SampleRespVo;
 import com.skinnovation.bizservice.service.sample.vo.SampleSearchReqVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Tag(name = "sample", description = "샘플 API")
+@Api(tags = {"샘플 API"})
 @RequestMapping(value = "/v1/sample")
 @RestController
 public class SampleController {
@@ -50,7 +51,7 @@ public class SampleController {
         return ResponseEntity.ok("hello " + name);
     }
 
-    @Operation(summary = "Test hello", description = "hello api example")
+    @Operation(summary = "index", description = "index api")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK !!"),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
@@ -74,10 +75,10 @@ public class SampleController {
 
     @PostMapping("/add")
     @Operation(summary = "User 등록", description = "사용자를 등록한다.")
-    public ResponseEntity<String> insertUser(@RequestBody SampleAddVo vo) {
+    public ResponseEntity<Integer> insertUser(@RequestBody SampleAddVo vo) {
         log.debug("SampleReqVo : {}", vo);
         int changRow = sampleService.insertUser(vo);
-        return ResponseEntity.ok(Integer.toString(changRow));
+        return ResponseEntity.ok(Integer.valueOf(changRow));
     }
 
     @GetMapping("/encrypt")

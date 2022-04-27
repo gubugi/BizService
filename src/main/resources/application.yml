@@ -4,14 +4,13 @@ server:
 spring:
   application:
     name: biz-service
+  config:
+    use-legacy-processing: true
+  profiles:
+    active: local
   output:
     ansi:
       enabled: always
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;DatabaseName=SKI_LCA_WEB
-    username: ENC("4cZf0aU1byzMcS9r7EGFbg==") #sa
-    password: ENC("1WrDUKyrVZ59LtDgntGy2gWjIvFWbOgx") #qwer1234!$
 
 mybatis:
   mapper-locations: mapper/**/*.xml
@@ -36,50 +35,3 @@ jasypt:
     bean: jasyptStringEncryptor
     password: "skilcalife"
 
----
-## Local Developer
-server:
-  port: 9005
-
-spring:
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    #    url: jdbc:log4jdbc:mariadb://localhost:3306/tt_ski?characterEncoding=UTF-8&serverTimezone=UTC
-    #    username: root
-    #    password: 741218g!$
-    url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;DatabaseName=SKI_LCA_WEB
-    username: ENC("4cZf0aU1byzMcS9r7EGFbg==") #sa
-    password: ENC("1WrDUKyrVZ59LtDgntGy2gWjIvFWbOgx") #qwer1234!$
-  config:
-    activate:
-      on-profile: local
-
----
-## Developer
-server:
-  port: 9006
-
-spring:
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:sqlserver://10.90.2.203:1433;DatabaseName=SKI_LCA_WEB
-    username: sa
-    password: qwer1234!$
-  config:
-    activate:
-      on-profile: dev
-
----
-## Production
-server:
-  port: 9007
-
-spring:
-  datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://10.90.2.203:1433;DatabaseName=SKI_LCA_WEB
-    username: ENC(02TJayD6q3sklfgIob+ws+rPyNlQTlrZ)
-    password: ENC(mw4qTfR1fmLUq6AId+r8qXWIiVh+JkVD)
-  config:
-    activate:
-      on-profile: prod
