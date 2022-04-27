@@ -10,20 +10,22 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableEncryptableProperties
-public class JasyptConfigDES {
+public class JasyptEncryptorConfig {
     @Value("${jasypt.encryptor.password}")
     private String PASSWORD;
 
-    @Bean("jasyptEncryptor")
-    public StringEncryptor stringEncryptor() {
+    @Bean(name = "jasyptStringEncryptor")
+    public StringEncryptor getPasswordEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        config.setPassword(PASSWORD);
-        config.setPoolSize("1");
+
+        config.setPassword(PASSWORD); // encryptor's private key
         config.setAlgorithm("PBEWithMD5AndDES");
-        config.setStringOutputType("base64");
         config.setKeyObtentionIterations("1000");
+        config.setPoolSize("1");
+        config.setProviderName("SunJCE");
         config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+        config.setStringOutputType("base64");
         encryptor.setConfig(config);
 
         return encryptor;

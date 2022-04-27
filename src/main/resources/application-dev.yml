@@ -1,9 +1,0 @@
-spring:
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-#    url: jdbc:log4jdbc:mariadb://localhost:3306/tt_ski?characterEncoding=UTF-8&serverTimezone=UTC
-#    username: root
-#    password: 741218g!$
-    url: jdbc:log4jdbc:sqlserver://10.90.2.203:1433;DatabaseName=SKI_LCA_WEB
-    username: sa
-    password: qwer1234!$
