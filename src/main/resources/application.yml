@@ -28,13 +28,9 @@ logging:
       springframework: debug
       springframework.web: debug
 
-  file:
-    name:
-      path: /logs
-
 log:
   config:
-    path: file:D:/workspace/skinnovation/BizService/log
+    path: file:./log
 
 jasypt:
   encryptor:

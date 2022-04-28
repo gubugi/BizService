@@ -1,12 +1,13 @@
 package com.skinnovation.bizservice.web.sample;
 
+import com.skinnovation.bizservice.common.BaseErrorVo;
+import com.skinnovation.bizservice.common.BaseResponseVo;
 import com.skinnovation.bizservice.service.sample.SampleService;
 import com.skinnovation.bizservice.service.sample.vo.SampleAddVo;
 import com.skinnovation.bizservice.service.sample.vo.SampleReqVo;
 import com.skinnovation.bizservice.service.sample.vo.SampleRespVo;
 import com.skinnovation.bizservice.service.sample.vo.SampleSearchReqVo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -19,6 +20,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Api(tags = {"샘플 API"})
@@ -67,10 +71,21 @@ public class SampleController {
 
     @GetMapping("/info")
     @Operation(summary = "User 조회", description = "사용자 정보를 조회한다.")
-    public ResponseEntity<SampleRespVo> userInfo(@Validated SampleSearchReqVo vo) {
-        log.debug("SampleReqVo : {}", vo);
-
-        return ResponseEntity.ok(sampleService.findUser(vo));
+    public BaseResponseVo<Object> userInfo(@Validated SampleSearchReqVo vo) {
+        logger.debug("SampleReqVo : {}", vo);
+        SampleRespVo info = sampleService.findUser(vo);
+        List<BaseErrorVo> errorList = new ArrayList<>();
+        logger.debug("--------------------------------------------------------------------");
+        logger.info("Builder > {}", BaseResponseVo.builder().status("200").message("성공").errorList(errorList).resultData(info).build());
+        logger.info("info : {}", info);
+        logger.debug("--------------------------------------------------------------------");
+        return BaseResponseVo
+                .builder()
+                .status("200")
+                .message("성공")
+                .errorList(errorList)
+                .resultData(info)
+                .build();
     }
 
     @PostMapping("/add")
