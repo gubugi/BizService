@@ -39,6 +39,7 @@ public class UserVo implements UserDetails {
     @Schema(description = "사용자권한")
     private String userRole;
 
+    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
     public void setRoles() {
@@ -61,7 +62,7 @@ public class UserVo implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userNm;
+        return userId;
     }
 
     @Override

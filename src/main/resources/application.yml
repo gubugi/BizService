@@ -11,6 +11,8 @@ spring:
   output:
     ansi:
       enabled: always
+  mvc:
+    log-request-details: true
 
 mybatis:
   mapper-locations: mapper/**/*.xml
@@ -21,9 +23,11 @@ logging:
   level:
     root: info
     sql: debug
+#    web: debug
     org:
       springframework: debug
       springframework.web: debug
+
   file:
     name:
       path: /logs

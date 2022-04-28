@@ -1,25 +1,22 @@
 package com.skinnovation.bizservice.web.common;
 
 import com.skinnovation.bizservice.config.JwtTokenProvider;
-import com.skinnovation.bizservice.service.common.UserMapper;
 import com.skinnovation.bizservice.service.common.UserService;
-import com.skinnovation.bizservice.service.common.vo.LoginVo;
-import com.skinnovation.bizservice.service.common.vo.UserReqVo;
-import com.skinnovation.bizservice.service.common.vo.UserVo;
+import com.skinnovation.bizservice.service.common.vo.*;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Slf4j
+@Api(tags = {"User API"})
 @RequiredArgsConstructor
 @RequestMapping(value = "/user/v1")
 @RestController
@@ -41,16 +38,37 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginVo loginVo) {
-        UserVo member = userService.findById(loginVo.getUserId());
+    public ResponseEntity<TokenVo> login(@RequestBody LoginVo loginVo) {
+        if (loginVo == null) {
+            throw new IllegalArgumentException("가입되지 않은 사용자 입니다.");
+        }
+        log.debug("> Login Id : {}", loginVo.getUserId());
+        log.debug("> Login pw : {}", loginVo.getUserPw());
+        UserInfoVo member = userService.findById(loginVo.getUserId());
         if (member == null) {
-            throw new IllegalArgumentException("가입되지 않은 E-MAIL 입니다.");
+            throw new IllegalArgumentException("가입되지 않은 사용자 입니다.");
         }
         log.debug("user info : {}", member);
-        if (!passwordEncoder.matches(loginVo.getUserPw(), member.getPassword())) {
+        if (!passwordEncoder.matches(loginVo.getUserPw(), member.getUserPw())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
+        List<String> roles = new ArrayList<>();
+        if (!member.getUserRole().trim().equals("")) {
+            roles.add(member.getUserRole().trim());
+        }
+        Date now = new Date();
+        TokenVo tokenVo = new TokenVo();
+        tokenVo.setUserId(loginVo.getUserId());
+        tokenVo.setUserToken(jwtTokenProvider.createToken(member.getUserNm(), roles));
+        tokenVo.setIssuedAt(now);
 
-        return ResponseEntity.ok(jwtTokenProvider.createToken(member.getUsername(), member.getRoles()));
+        return ResponseEntity.ok(tokenVo);
+    }
+
+    // 암호찾기
+    @GetMapping("/make/password")
+    public ResponseEntity<String> login(@RequestParam String str) {
+        log.debug("> input string : {}", str);
+        return ResponseEntity.ok(passwordEncoder.encode(str));
     }
 }

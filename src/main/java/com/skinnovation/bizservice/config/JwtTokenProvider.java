@@ -23,8 +23,8 @@ import java.util.List;
 public class JwtTokenProvider {
     private String secretKey = "ski-lca-life";
 
-    // 토큰 유효시간 30분
-    private long tokenValidTime = 30 * 60 * 1000L;
+    // 토큰 유효시간 1일
+    private long tokenValidTime = 24 * 60 * 60 * 1000L;
 
     private final UserDetailsService userDetailsService;
 
@@ -44,7 +44,6 @@ public class JwtTokenProvider {
                 .setIssuedAt(now) // 토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
-                // signature 에 들어갈 secret값 세팅
                 .compact();
     }
 

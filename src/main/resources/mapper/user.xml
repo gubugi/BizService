@@ -5,7 +5,7 @@
 
 <mapper namespace="com.skinnovation.bizservice.service.common.UserMapper">
     <select id="findById"
-            resultType="com.skinnovation.bizservice.service.common.vo.UserVo">
+            resultType="com.skinnovation.bizservice.service.common.vo.UserInfoVo">
         SELECT
             user_no
              , user_id
@@ -13,6 +13,7 @@
              , user_nm
              , user_email
              , user_corp_cd
+             , user_role
              , CONVERT(CHAR(19), create_at, 20) as create_at
              , CONVERT(CHAR(19), update_at, 20) as update_at
         FROM tbl_mst_user2
@@ -20,7 +21,7 @@
             user_id = #{userId}
     </select>
 
-    <insert id="saveUser" parameterType="com.skinnovation.bizservice.service.common.UserReqVo">
+    <insert id="saveUser" parameterType="com.skinnovation.bizservice.service.common.vo.UserReqVo">
         INSERT INTO tbl_mst_user2 (
                                     user_id
                                   , user_pw
@@ -31,7 +32,7 @@
                                   , create_at
                                   , update_at
         ) VALUES (
-                     #{userId}
+                   #{userId}
                  , #{userPw}
                  , #{userNm}
                  , #{userEmail}

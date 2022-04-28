@@ -1,5 +1,6 @@
 package com.skinnovation.bizservice.service.common;
 
+import com.skinnovation.bizservice.service.common.vo.UserInfoVo;
 import com.skinnovation.bizservice.service.common.vo.UserReqVo;
 import com.skinnovation.bizservice.service.common.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +18,10 @@ public class UserService {
         return userMapper.saveUser(vo);
     }
 
-    public UserVo findById(String userId) {
-        return userMapper.findById(userId);
+    public UserInfoVo findById(String userId) {
+        UserInfoVo userInfoVo = userMapper.findById(userId);
+        log.info(">> User info : {}", userInfoVo);
+        return userInfoVo;
     }
 
 }
