@@ -1,9 +1,11 @@
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:sqlserver://localhost:1433;instanceName=SKI_LCA_WEB
+    username: dev_service
+    password: qwer1234!$
+    #ENC("wfnGHPqW5+sR65tqhvKBeQ==") #sa
+    #ENC("dKsNXNJsO3mi1d7Suk4ih3AG434hEsNR") #qwer1234!$
     #    url: jdbc:log4jdbc:mariadb://localhost:3306/tt_ski?characterEncoding=UTF-8&serverTimezone=UTC
     #    username: root
     #    password: 741218g!$
-    url: jdbc:log4jdbc:sqlserver://127.0.0.1:1433;DatabaseName=SKI_LCA_WEB
-    username: ENC("4cZf0aU1byzMcS9r7EGFbg==") #sa
-    password: ENC("1WrDUKyrVZ59LtDgntGy2gWjIvFWbOgx") #qwer1234!$

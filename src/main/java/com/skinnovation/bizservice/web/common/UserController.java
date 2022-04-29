@@ -6,7 +6,9 @@ import com.skinnovation.bizservice.service.common.vo.*;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,9 @@ import java.util.List;
 public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+
+    @Value("${jasypt.encryptor.password}")
+    private String PASSWORD;
 
     @Autowired
     private UserService userService;
@@ -54,10 +59,7 @@ public class UserController {
         }
         List<String> roles = new ArrayList<>();
         if (!member.getUserRole().trim().equals("")) {
-            roles.add("ROLE_" + member.getUserRole().trim());
-            if (member.getUserRole().trim().equals("ADMIN")) {
-                roles.add("ROLE_USER");
-            }
+            roles.add(member.getUserRole().trim());
         }
         Date now = new Date();
         TokenVo tokenVo = new TokenVo();
@@ -74,4 +76,19 @@ public class UserController {
         log.debug("> input string : {}", str);
         return ResponseEntity.ok(passwordEncoder.encode(str));
     }
+
+    @GetMapping("/encrypt")
+    public ResponseEntity<String> encrypt(@RequestParam String str) {
+        log.debug("## String : {}", str);
+        log.debug("PASSWORD : {}", PASSWORD);
+        StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
+        pbeEnc.setAlgorithm("PBEWithMD5AndDES");
+        pbeEnc.setPassword(PASSWORD);
+
+        String enc = pbeEnc.encrypt(str);
+        log.debug("enc = {}", enc);
+
+        return ResponseEntity.ok(enc);
+    }
+
 }

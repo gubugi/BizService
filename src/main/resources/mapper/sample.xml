@@ -14,6 +14,7 @@
              , user_nm
              , user_email
              , user_corp_cd
+             , user_role
              , CONVERT(CHAR(19), create_at, 20) as create_at
              , CONVERT(CHAR(19), update_at, 20) as update_at
         FROM tbl_mst_user2
