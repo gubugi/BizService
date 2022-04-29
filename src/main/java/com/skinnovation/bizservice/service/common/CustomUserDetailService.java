@@ -32,7 +32,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
         List<String> roles = new ArrayList<>();
         if (!userInfo.getUserRole().trim().equals("")) {
-            roles.add(userInfo.getUserRole().trim());
+            roles.add("ROLE_" + userInfo.getUserRole().trim());
         }
         UserDetails userDetails = new UserDetails() {
             @Override

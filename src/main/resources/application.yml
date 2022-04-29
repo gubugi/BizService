@@ -13,6 +13,8 @@ spring:
       enabled: always
   mvc:
     log-request-details: true
+  jwt:
+    secret: "ski-lca-life"
 
 mybatis:
   mapper-locations: mapper/**/*.xml
@@ -21,12 +23,12 @@ mybatis:
 
 logging:
   level:
-    root: info
+    root: debug
     sql: debug
-#    web: debug
-    org:
-      springframework: debug
-      springframework.web: debug
+    web: debug
+#    org:
+#      springframework: debug
+#      springframework.web: debug
 
 log:
   config:

@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -30,6 +31,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket swaggerApi() {
+
         return new Docket(DocumentationType.OAS_30)
                 .consumes(getConsumeContentTypes())
                 .produces(getProduceContentTypes())
@@ -57,7 +59,7 @@ public class SwaggerConfig {
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("JWT", "Authorization", "header");
+        return new ApiKey("JWT", "X-AUTH-TOKEN", "header");
     }
 
     private SecurityContext securityContext() {

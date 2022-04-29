@@ -21,12 +21,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Api(tags = {"샘플 API"})
-@RequestMapping(value = "/v1/sample")
+@RequestMapping(value = "/sample/v1")
 @RestController
 public class SampleController {
     private static final Logger logger = LogManager.getLogger(SampleController.class);
@@ -71,21 +72,24 @@ public class SampleController {
 
     @GetMapping("/info")
     @Operation(summary = "User 조회", description = "사용자 정보를 조회한다.")
-    public BaseResponseVo<Object> userInfo(@Validated SampleSearchReqVo vo) {
+    public BaseResponseVo<SampleRespVo> userInfo(@Validated SampleSearchReqVo vo) {
         logger.debug("SampleReqVo : {}", vo);
         SampleRespVo info = sampleService.findUser(vo);
+        if (info == null) {
+            throw new FindException("사용자를 찾을 수 없습니다.");
+        }
         List<BaseErrorVo> errorList = new ArrayList<>();
+        BaseResponseVo<SampleRespVo> responseVo = new BaseResponseVo<>();
+        responseVo.setErrorList(errorList);
+        responseVo.setResultData(info);
+        responseVo.setMessage("성공");
+        responseVo.setStatus("200");
+
         logger.debug("--------------------------------------------------------------------");
-        logger.info("Builder > {}", BaseResponseVo.builder().status("200").message("성공").errorList(errorList).resultData(info).build());
+        logger.info("Builder > {}", responseVo);
         logger.info("info : {}", info);
         logger.debug("--------------------------------------------------------------------");
-        return BaseResponseVo
-                .builder()
-                .status("200")
-                .message("성공")
-                .errorList(errorList)
-                .resultData(info)
-                .build();
+        return responseVo;
     }
 
     @PostMapping("/add")

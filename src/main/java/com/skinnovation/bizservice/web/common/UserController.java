@@ -54,12 +54,15 @@ public class UserController {
         }
         List<String> roles = new ArrayList<>();
         if (!member.getUserRole().trim().equals("")) {
-            roles.add(member.getUserRole().trim());
+            roles.add("ROLE_" + member.getUserRole().trim());
+            if (member.getUserRole().trim().equals("ADMIN")) {
+                roles.add("ROLE_USER");
+            }
         }
         Date now = new Date();
         TokenVo tokenVo = new TokenVo();
         tokenVo.setUserId(loginVo.getUserId());
-        tokenVo.setUserToken(jwtTokenProvider.createToken(member.getUserNm(), roles));
+        tokenVo.setUserToken(jwtTokenProvider.createToken(member.getUserId(), roles));
         tokenVo.setIssuedAt(now);
 
         return ResponseEntity.ok(tokenVo);
