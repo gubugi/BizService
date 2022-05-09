@@ -33,6 +33,9 @@ public class CustomUserDetailService implements UserDetailsService {
         List<String> roles = new ArrayList<>();
         if (!userInfo.getUserRole().trim().equals("")) {
             roles.add(userInfo.getUserRole().trim());
+            if (userInfo.getUserRole().trim().equals("ROLE_ADMIN")) {
+                roles.add("ROLE_USER");
+            }
         }
         UserDetails userDetails = new UserDetails() {
             @Override

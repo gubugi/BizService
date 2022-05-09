@@ -60,6 +60,9 @@ public class UserController {
         List<String> roles = new ArrayList<>();
         if (!member.getUserRole().trim().equals("")) {
             roles.add(member.getUserRole().trim());
+            if (member.getUserRole().trim().equals("ROLE_ADMIN")) {
+                roles.add("ROLE_USER");
+            }
         }
         Date now = new Date();
         TokenVo tokenVo = new TokenVo();
